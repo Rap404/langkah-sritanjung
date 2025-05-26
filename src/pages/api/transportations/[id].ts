@@ -1,5 +1,4 @@
 import { supabase } from "@/lib/supabase";
-import { Homestay } from "@/types/homestay";
 import { Transportation } from "@/types/transportation";
 import { NextApiRequest, NextApiResponse } from "next";
 import slugify from "slugify";
