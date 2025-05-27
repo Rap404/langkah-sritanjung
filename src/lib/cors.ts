@@ -1,18 +1,18 @@
-import Cors from 'cors';
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-const cors = Cors({
-    origin: ["https://sritanjung.sagaradev.com/", "http://localhost:5173", "https://langkah-sritanjung.vercel.app"],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-});
+export function runCors(req: NextApiRequest, res: NextApiResponse) {
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With, Content-Type, Authorization'
+  );
 
-export function runCorsMiddleware(req: NextApiRequest, res: NextApiResponse){
-    return new Promise<void>((resolve, reject) => {
-        cors(req, res, (result: unknown) => {
-            if (result instanceof Error) {
-                return reject(result);
-            }
-            return resolve();
-        })
-    })
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return true;
+  }
+
+  return false; 
 }

@@ -1,4 +1,5 @@
-import { runCorsMiddleware } from "@/lib/cors";
+
+import { runCors } from "@/lib/cors";
 import { supabase } from "@/lib/supabase";
 import { Transportation } from "@/types/transportation";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -6,7 +7,8 @@ import slugify from "slugify";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-    await runCorsMiddleware(req, res);
+    const handled = runCors(req, res);
+    if (handled) return;
 
     if (req.method === "OPTIONS") {
     return res.status(200).end();
