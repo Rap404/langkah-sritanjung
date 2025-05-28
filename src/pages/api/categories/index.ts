@@ -1,9 +1,18 @@
+import { runCors } from "@/lib/cors";
 import { supabase } from "@/lib/supabase";
 import { Category } from "@/types/category";
 import { NextApiRequest, NextApiResponse } from "next";
 import slugify from "slugify";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+    const handled = runCors(req, res);
+            if (handled) return;
+    
+        if (req.method === "OPTIONS") {
+        return res.status(200).end();
+      }
+
     if (req.method === "GET"){
         const { data, error } = await supabase.from("category").select('*').order('created_at', { ascending: false });
         if (error) {
