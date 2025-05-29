@@ -9,12 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const handled = runCors(req, res);
             if (handled) return;
     
-        if (req.method === "OPTIONS") {
+    if (req.method === "OPTIONS") {
         return res.status(200).end();
-      }
+    }
 
     if (req.method === "GET"){
-        const { data, error } = await supabase.from("category").select('*').order('created_at', { ascending: false });
+        const { data, error } = await supabase.from("category").select('*, destination(*)').order('created_at', { ascending: false });
         if (error) {
             return res.status(500).json({ error: error.message });
         } else {
@@ -23,12 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "POST") {
-        const { name, destinations } = req.body as Category;
+        const { name } = req.body as Category;
         const slug = slugify(name, {
             lower: true})
         const { data, error } = await supabase
         .from("category")
-        .insert([{ name, destinations, slug }])
+        .insert([{ name, slug }])
         .select()
         .single();
         if (error) {

@@ -27,14 +27,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "PUT") {
-        const { name, location, actions, timelist, image, transportations, homestays, culinaries } = req.body;
+        const { name, location, actions, timelist, image, category_id } = req.body;
 
         const slug = slugify(name, {
                     lower: true,})
 
         const { data, error } = await supabase
             .from("destination")
-            .update({ name, slug, location, actions, timelist, image, transportations, homestays, culinaries })
+            .update({ name, slug, location, actions, timelist, image, category_id })
             .eq("id", id)
             .select()
             .single();

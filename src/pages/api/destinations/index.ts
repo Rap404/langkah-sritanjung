@@ -14,7 +14,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
     if (req.method === "GET") {
-        const { data, error } = await supabase.from("destination").select('*').order('created_at', { ascending: false });
+        const { data, error } = await supabase
+        .from("destination")
+        .select('*, destinations_homestays ( homestay (*) ), destinations_transportations ( transportation (*) ), destinations_culinaries ( culinary (*) )')
+        .order('created_at', { ascending: false });
         if (error) return res.status(500).json({ error: error.message });
         return res.status(200).json(data as Destination[]);
     }

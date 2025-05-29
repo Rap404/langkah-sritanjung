@@ -1,7 +1,7 @@
 export interface Category {
     id: number;
     name: string;
-    destinations: string;
+    destination: string;
     slug: string;
     created_at: string;
 }

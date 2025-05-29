@@ -3,11 +3,9 @@ export interface Destination{
     name: string;
     slug: string;
     location: string;
-    actions: string;
+    actions: Array<string>;
     image: string;
     timelist: string;
-    transportation: number;
-    culinaries: number;
-    homestays: number;
+    category_id: number;
     created_at: number;
 }
