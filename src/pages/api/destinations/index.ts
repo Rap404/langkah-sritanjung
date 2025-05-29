@@ -23,14 +23,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "POST") {
-        const { name, description, address, telephone, price, url, image } = req.body;
+        const { name, description, location, actions, timelist, image, category_id } = req.body;
 
         const slug = slugify(name, {
             lower: true,})
 
         const { data, error } = await supabase
             .from("destination")
-            .insert([{ name, slug, description, address, telephone, price, url, image }])
+            .insert([{ name, slug, location, description, actions, timelist, image, category_id }])
             .select()
             .single();
         if (error) return res.status(500).json({ error: error.message });
