@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === "GET") {
         const { data, error } = await supabase
             .from("category")
-            .select("*")
+            .select('*, destination(*)')
             .eq("slug", id)
             .single();
 

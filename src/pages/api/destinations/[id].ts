@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === "GET") {
         const { data, error } = await supabase
             .from("destination")
-            .select("*")
+            .select('*, destinations_homestays ( homestay (*) ), destinations_transportations ( transportation (*) ), destinations_culinaries ( culinary (*) )')
             .eq("slug", id)
             .single();
 
